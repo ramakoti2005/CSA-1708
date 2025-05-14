@@ -1,0 +1,45 @@
+print(" 192311264 ")
+# 🎯 Import necessary libraries
+from sklearn import tree
+from sklearn.preprocessing import LabelEncoder
+
+# 🧩 Sample dataset
+# Features: [Age, Income, Student, Credit_rating]
+X = [
+    ['youth', 'high', 'no', 'fair'],
+    ['youth', 'high', 'no', 'excellent'],
+    ['middle_aged', 'high', 'no', 'fair'],
+    ['senior', 'medium', 'no', 'fair'],
+    ['senior', 'low', 'yes', 'fair'],
+    ['senior', 'low', 'yes', 'excellent'],
+    ['middle_aged', 'low', 'yes', 'excellent'],
+    ['youth', 'medium', 'no', 'fair'],
+    ['youth', 'low', 'yes', 'fair'],
+    ['senior', 'medium', 'yes', 'fair'],
+    ['youth', 'medium', 'yes', 'excellent'],
+    ['middle_aged', 'medium', 'no', 'excellent'],
+    ['middle_aged', 'high', 'yes', 'fair'],
+    ['senior', 'medium', 'no', 'excellent']
+]
+
+# Target labels: Buy Computer? (yes or no)
+Y = ['no', 'no', 'yes', 'yes', 'yes', 'no', 'yes', 'no', 'yes', 'yes', 'yes', 'yes', 'yes', 'no']
+
+# 🏷️ Encode string values to numbers
+le = LabelEncoder()
+X_encoded = [list(le.fit_transform(row)) for row in X]
+Y_encoded = le.fit_transform(Y)
+
+# 🌳 Create Decision Tree classifier
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(X_encoded, Y_encoded)
+
+# 🔍 Predict a new input
+test_data = [['youth', 'medium', 'yes', 'fair']]  # expected: 'yes'
+
+# Encode the test data
+test_encoded = [list(le.fit_transform(row)) for row in test_data]
+prediction = clf.predict(test_encoded)
+
+# 🎉 Output the prediction
+print("Prediction:", le.inverse_transform(prediction)[0])

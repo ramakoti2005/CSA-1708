@@ -1,0 +1,57 @@
+print(" 192311264 - MADHAVA ")
+from collections import deque
+
+def bfs(x, y, z):
+    initial_state = (0, 0)  # both jugs are empty initially
+    visited = set()  # to keep track of visited states
+    queue = deque([(initial_state, [])])  # stores states and the path leading to them
+
+    while queue:
+        (curr_x, curr_y), path = queue.popleft()
+        
+        if curr_x == z or curr_y == z:
+            return path + [(curr_x, curr_y)]
+        
+        if (curr_x, curr_y) in visited:
+            continue
+        visited.add((curr_x, curr_y))
+        
+        next_states = [
+            (x, curr_y),  # Fill Jug 1
+            (curr_x, y),  # Fill Jug 2
+            (0, curr_y),  # Empty Jug 1
+            (curr_x, 0),  # Empty Jug 2
+            (curr_x - min(curr_x, y - curr_y), curr_y + min(curr_x, y - curr_y)),  # Jug 1 to Jug 2
+            (curr_x + min(curr_y, x - curr_x), curr_y - min(curr_y, x - curr_x))   # Jug 2 to Jug 1
+        ]
+        
+        for state in next_states:
+            if state not in visited:
+                queue.append((state, path + [(curr_x, curr_y)]))
+    
+    return None  # No solution found
+
+def print_solution(path):
+    if path:
+        print("Solution steps:")
+        for step in path:
+            print(f"Jug 1: {step[0]} liters, Jug 2: {step[1]} liters")
+    else:
+        print("No solution possible.")
+
+def main():
+    print("Enter the capacity of Jug 1 (in liters):")
+    x = int(input())  # Capacity of Jug 1
+    print("Enter the capacity of Jug 2 (in liters):")
+    y = int(input())  # Capacity of Jug 2
+    print("Enter the target amount of water (in liters):")
+    z = int(input())  # Target amount of water to measure
+
+    if z > max(x, y):
+        print("Target amount is larger than both jug capacities. No solution.")
+    else:
+        path = bfs(x, y, z)
+        print_solution(path)
+
+if __name__ == "__main__":
+    main()

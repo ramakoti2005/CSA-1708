@@ -1,0 +1,11 @@
+% 192311264
+% Pattern Matching Example
+
+match([a, b, c]).
+match([a, X, c]) :- write('Matched pattern with variable X = '), write(X), nl.
+
+:- initialization(main).
+
+main :-
+    write('192311264'), nl,
+    match([a, b, c]).

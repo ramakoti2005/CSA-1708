@@ -1,0 +1,46 @@
+% Declare dynamic predicates so they can be modified at runtime
+:- dynamic at/2. 
+:- dynamic has/2.
+
+% Facts: Define the environment and actions
+has(monkey, banana).  % Monkey wants the banana
+at(monkey, floor).    % Monkey is initially on the floor
+at(banana, shelf).    % Banana is on the shelf
+at(stool, floor).     % Stool is on the floor
+
+% Rule: Monkey can climb on the stool
+climb_on_stool :-
+    at(monkey, floor),
+    at(stool, floor),
+    retract(at(monkey, floor)),
+    assert(at(monkey, stool)),
+    write('Monkey climbs on the stool.'), nl.
+
+% Rule: Monkey can reach the banana if on the stool
+reach_banana :-
+    at(monkey, stool),
+    at(banana, shelf),
+    retract(at(monkey, stool)),
+    assert(at(monkey, shelf)),
+    write('Monkey reaches the banana.'), nl.
+
+% Rule: Monkey can grab the banana
+grab_banana :-
+    at(monkey, shelf),
+    at(banana, shelf),
+    retract(at(banana, shelf)),
+    write('Monkey grabs the banana.'), nl.
+
+% Rule: Complete task - Monkey climbs, reaches, and grabs the banana
+get_banana :-
+    climb_on_stool,
+    reach_banana,
+    grab_banana.
+
+% Entry point
+:- initialization(main).
+
+main :-
+    write('192311264'), nl,
+    write('Monkey Banana Problem:'), nl,
+    get_banana.

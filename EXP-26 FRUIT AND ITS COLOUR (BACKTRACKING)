@@ -1,0 +1,25 @@
+EXP-25 MONKEY BANANA% Facts: Define fruits and their colors
+fruit_color(apple, red).
+fruit_color(banana, yellow).
+fruit_color(grape, purple).
+fruit_color(orange, orange).
+fruit_color(mango, yellow).
+fruit_color(strawberry, red).
+
+% Rule: To find the color of a given fruit
+find_color(Fruit, Color) :-
+    fruit_color(Fruit, Color),
+    write('The color of '), write(Fruit), write(' is '), write(Color), nl.
+
+% Entry point
+:- initialization(main).
+
+main :-
+    write('192311264'), nl,
+    write('Fruit and Its Color using Backtracking:'), nl,
+    write('Query to find the color of apple:'), nl,
+    find_color(apple, Color),
+    write('Query to find the color of banana:'), nl,
+    find_color(banana, Color),
+    write('Query to find the color of mango:'), nl,
+    find_color(mango, Color).
